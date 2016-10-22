@@ -36,8 +36,8 @@ db_password = "root"   # MySQL database password
 
 M_VERSION = "1.1"
 
-M_INFO = 3                 # Print messages: 0 - none, 1 - Startup, 2 - Serial, 3 - All
-F_UNIQUE = 1              # 1 = Output no topic name if only one topic type is found
+M_INFO = 0                 # Print messages: 0 - none, 1 - Startup, 2 - Serial, 3 - All
+F_UNIQUE = 0              # 1 = Output no topic name if only one topic type is found
 
 import paho.mqtt.client as mqtt
 import MySQLdb as mdb
