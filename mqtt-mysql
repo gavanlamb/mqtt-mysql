@@ -21,23 +21,23 @@
 #
 # **** Start of user configuration values
 
-broker = "localhost"       # MQTT broker ip address or name
+broker = "192.168.1.159"   # MQTT broker ip address or name
 broker_port = 1883         # MQTT broker port
 
-sub_prefix = "mysql"       # Own subscribe topic
+sub_prefix = "devices/0ea9a9e0/moisture/value"       # Own subscribe topic
 pub_prefix = "stat"        # General publish topic
 
 db_hostname = "localhost"  # MySQL host ip address or name
 db_database = "mqtt"       # MySQL database name
-db_username = "mqttuser"   # MySQL database user name
-db_password = "mqttpass"   # MySQL database password
+db_username = "root"   # MySQL database user name
+db_password = "root"   # MySQL database password
 
 # **** End of user configuration values
 
 M_VERSION = "1.1"
 
-M_INFO = 0                 # Print messages: 0 - none, 1 - Startup, 2 - Serial, 3 - All
-F_UNIQUE = 0               # 1 = Output no topic name if only one topic type is found
+M_INFO = 3                 # Print messages: 0 - none, 1 - Startup, 2 - Serial, 3 - All
+F_UNIQUE = 1              # 1 = Output no topic name if only one topic type is found
 
 import paho.mqtt.client as mqtt
 import MySQLdb as mdb
@@ -60,12 +60,12 @@ def get_setting(setting, default):
   state = default
   with con:
     cur = con.cursor()
-    cur.execute("SELECT state FROM settings WHERE setting = %s", (setting))
+    cur.execute("SELECT state FROM settings WHERE setting = %s", [setting])
     if cur.rowcount == 1:
       row = cur.fetchone()
       state = row[0]
     else:
-      cur.execute("INSERT INTO settings (setting, state) VALUES (%s, %s)", (setting, default))
+      cur.execute("INSERT INTO settings (setting, state) VALUES (%s, %s)", [setting, default])
   return int(state)
 
 def update_setting(setting, state):
